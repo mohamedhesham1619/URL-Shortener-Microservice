@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const shortenUrl = require('./data').shorten_URL
+const getUrl = require('./data').getUrl
 const app = express();
 
 // Basic Configuration
@@ -35,6 +36,15 @@ app.post('/api/shorturl', function(req, res) {
   }
   
 });
+
+app.get('/api/shorturl/:shorturl', (req, res)=>{
+  let originalUrl = getUrl(req.params.shorturl)
+  console.log(`short url: ${req.params.shorturl}, type: ${typeof req.params.shorturl} `)
+  console.log('original url: ', typeof originalUrl)
+  if(originalUrl){
+    res.redirect(originalUrl)
+  }
+})
 
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
