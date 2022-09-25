@@ -28,17 +28,25 @@ app.post('/api/shorturl', function (req, res) {
 
   let originalURL = req.body.url
   let parsedUrl = url.parse(originalURL)
+  
+  if (parsedUrl.protocol == 'http:' || parsedUrl.protocol == 'https:') {
+    dns.lookup(parsedUrl.hostname, (err, address, family) => {
+      if (err) {
+        res.json({
+          error: 'invalid url'
+        })
+      }
+      else {
+        res.json(shortenUrl(originalURL))
+      }
+    })
+  }
+  else {
+    res.json({
+      error: 'invalid url'
+    })
+  }
 
-  dns.lookup(parsedUrl.hostname, (err, address, family) => {
-    if (err) {
-      res.json({
-        error: 'invalid url'
-      })
-    }
-    else {
-      res.json(shortenUrl(originalURL))
-    }
-  })
 });
 
 app.get('/api/shorturl/:shorturl', (req, res) => {
