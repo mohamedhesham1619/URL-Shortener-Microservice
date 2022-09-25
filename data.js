@@ -1,21 +1,21 @@
 // store original url with its short url value
-let data = {}
+let urls = {}
 
 let shortUrlValue = 0
 
-// save the original url with its short url value in 'data' object
+// save the url and the current availble value for short url in 'urls' object
 function shorten_URL(url){
-    data[shortUrlValue] = url
-    let respond = {'original_url': url, 'short_url': shortUrlValue}
-    console.log(data)
+    urls[shortUrlValue] = url
+    let response = {'original_url': url, 'short_url': shortUrlValue}
     shortUrlValue++
 
-    return respond
+    return response
 }
 
 function getUrl(shortUrl){
-    if(data.hasOwnProperty(shortUrl)) {
-        return data[shortUrl]
+    // if the short url found in 'urls' return the original url of it
+    if(urls.hasOwnProperty(shortUrl)) {
+        return urls[shortUrl]
     }
     return undefined
 }
