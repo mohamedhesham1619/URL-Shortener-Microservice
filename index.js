@@ -23,7 +23,7 @@ app.get('/', function(req, res) {
 app.post('/api/shorturl', function(req, res) {
 
   // validate 'http://www.example.com' format
-  let regex = /^http:\/\/\w*.com$/   
+  let regex = /^http:\/\/www.\w*.com$/   
 
   let originalURL = req.body.url
   if(!regex.test(originalURL)){
